@@ -18,9 +18,12 @@ void Buffer::open(fs::FS* fs, String fn){
   file = fs->open(fileName, FILE_WRITE);
   file.close();
 
+  openPcap();
+}
+
+void Buffer::openPcap(){
   bufSizeA = 0;
-  bufSizeB = 0;
-  
+  bufSizeB = 0;  
   writing = true;
   
   write(uint32_t(0xa1b2c3d4)); // magic number
@@ -30,9 +33,8 @@ void Buffer::open(fs::FS* fs, String fn){
   write(uint32_t(0)); // accuracy of timestamps
   write(uint32_t(SNAP_LEN)); // max length of captured packets, in octets
   write(uint32_t(105)); // data link type
-
-  //useSD = true;
 }
+
 
 void Buffer::close(fs::FS* fs){
   if(!writing) return;
@@ -198,6 +200,36 @@ void Buffer::forceSave(fs::FS* fs){
 
   //Serial.printf("saved %u bytes\n",len);
 
+  saving = false;
+  writing = true;
+}
+
+void Buffer::forceSaveSerial() {
+  uint32_t len = bufSizeA + bufSizeB;
+  if(len == 0) return;
+
+  saving = true;
+  writing = false;
+  
+  if(useA){
+    if(bufSizeB > 0){
+      Serial.write(bufB, bufSizeB);
+      bufSizeB = 0;
+    }
+    if(bufSizeA > 0){
+      Serial.write(bufA, bufSizeA);
+      bufSizeA = 0;
+    }
+  } else {
+    if(bufSizeA > 0){
+      Serial.write(bufA, bufSizeA);
+      bufSizeA = 0;
+    }
+    if(bufSizeB > 0){
+      Serial.write(bufB, bufSizeB);
+      bufSizeB = 0;
+    }
+  }
   saving = false;
   writing = true;
 }

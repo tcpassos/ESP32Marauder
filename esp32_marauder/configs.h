@@ -3,6 +3,8 @@
   #define configs_h
 
   #define POLISH_POTATO
+
+  #define SNIFF_SERIAL
   
   //#define MARAUDER_MINI
   //#define MARAUDER_V4

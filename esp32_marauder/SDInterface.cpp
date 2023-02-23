@@ -70,12 +70,25 @@ bool SDInterface::initSD() {
 }
 
 void SDInterface::addPacket(uint8_t* buf, uint32_t len) {
-  if ((this->supported) && (this->do_save)) {
+  if (!this->do_save)
+    return;
+
+  #ifdef SNIFF_SERIAL
+    buffer_obj.addPacket(buf, len);
+    return;
+  #endif
+
+  if ((this->supported)) {
     buffer_obj.addPacket(buf, len);
   }
 }
 
 void SDInterface::openCapture(String file_name) {
+  #ifdef SNIFF_SERIAL
+    buffer_obj.openPcap();
+    return;
+  #endif
+
   if (this->supported)
     buffer_obj.open(&SD, file_name);
 }
@@ -216,6 +229,11 @@ bool SDInterface::checkDetectPin() {
 }
 
 void SDInterface::main() {
+  #ifdef SNIFF_SERIAL
+    buffer_obj.forceSaveSerial();
+    return;
+  #endif
+
   if ((this->supported) && (this->do_save)) {
     //Serial.println("Saving packet...");
     buffer_obj.forceSave(&SD);
