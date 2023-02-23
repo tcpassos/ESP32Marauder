@@ -98,7 +98,10 @@ bool CommandLine::hasSSIDs() {
 
 void CommandLine::runCommand(String input) {
   if (input != "") {
-    #ifndef SNIFF_SERIAL
+    #ifdef SNIFF_SERIAL
+      if (!input.startsWith("sniff"))
+        Serial.println("#" + input);
+    #else
       Serial.println("#" + input);
     #endif
   } else {

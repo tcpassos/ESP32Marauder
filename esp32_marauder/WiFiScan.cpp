@@ -1701,9 +1701,6 @@ void WiFiScan::apSnifferCallbackFull(void* buf, wifi_promiscuous_pkt_type_t type
         Serial.print(access_points->size());
 
         Serial.println();
-
-        if (save_packet)
-          sd_obj.addPacket(snifferPacket->payload, len);
       }
     }
   }
@@ -1827,9 +1824,6 @@ void WiFiScan::apSnifferCallback(void* buf, wifi_promiscuous_pkt_type_t type)
         Serial.print(access_points->size());
 
         Serial.println();
-
-        if (save_packet)
-          sd_obj.addPacket(snifferPacket->payload, len);
       }
     }
   }
