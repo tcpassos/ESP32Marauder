@@ -2894,7 +2894,7 @@ void WiFiScan::eapolSnifferCallback(void* buf, wifi_promiscuous_pkt_type_t type)
 
   if (( (snifferPacket->payload[30] == 0x88 && snifferPacket->payload[31] == 0x8e)|| ( snifferPacket->payload[32] == 0x88 && snifferPacket->payload[33] == 0x8e) )){
     num_eapol++;
-    Serial.println("Received EAPOL:");
+//    Serial.println("Received EAPOL:");
 
     char addr[] = "00:00:00:00:00:00";
     getMAC(addr, snifferPacket->payload, 10);
@@ -2996,7 +2996,7 @@ void WiFiScan::activeEapolSnifferCallback(void* buf, wifi_promiscuous_pkt_type_t
 
   if (( (snifferPacket->payload[30] == 0x88 && snifferPacket->payload[31] == 0x8e)|| ( snifferPacket->payload[32] == 0x88 && snifferPacket->payload[33] == 0x8e) )){
     num_eapol++;
-    Serial.println("Received EAPOL:");
+//    Serial.println("Received EAPOL:");
 
 //    for (int i = 0; i < len; i++) {
 //      char hexCar[3];
