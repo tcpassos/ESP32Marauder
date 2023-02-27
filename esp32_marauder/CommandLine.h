@@ -10,7 +10,6 @@
 
 #include "WiFiScan.h"
 #include "Web.h"
-#include "SDInterface.h"
 #include "settings.h"
 
 #ifdef HAS_SCREEN
@@ -20,7 +19,6 @@
 
 extern WiFiScan wifi_scan_obj;
 extern Web web_obj;
-extern SDInterface sd_obj;
 extern Settings settings_obj;
 extern LinkedList<AccessPoint>* access_points;
 extern LinkedList<ssid>* ssids;

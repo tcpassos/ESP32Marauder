@@ -24,7 +24,6 @@
 #ifdef HAS_SCREEN
   #include "Display.h"
 #endif
-#include "SDInterface.h"
 #include "Buffer.h"
 #include "BatteryInterface.h"
 #include "TemperatureInterface.h"
@@ -75,7 +74,6 @@
 #ifdef HAS_SCREEN
   extern Display display_obj;
 #endif
-extern SDInterface sd_obj;
 extern Buffer buffer_obj;
 extern BatteryInterface battery_obj;
 extern TemperatureInterface temp_obj;

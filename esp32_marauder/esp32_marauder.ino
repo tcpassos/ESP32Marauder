@@ -24,7 +24,6 @@ https://www.online-utility.org/image/convert/to/XBM
 
 #include "Assets.h"
 #include "WiFiScan.h"
-#include "SDInterface.h"
 #include "Web.h"
 #include "Buffer.h"
 #include "BatteryInterface.h"
@@ -52,7 +51,6 @@ https://www.online-utility.org/image/convert/to/XBM
 #endif
 
 WiFiScan wifi_scan_obj;
-SDInterface sd_obj;
 Web web_obj;
 Buffer buffer_obj;
 BatteryInterface battery_obj;
@@ -128,6 +126,8 @@ void setup()
 
   delay(10);
 
+  buffer_obj = Buffer();
+  
   Serial.begin(115200);
   Serial1.begin(115200);
 
@@ -201,22 +201,6 @@ void setup()
   #ifdef HAS_SCREEN
     display_obj.tft.println(F(text_table0[2]));
   #endif
-
-  // Do some SD stuff
-  if(sd_obj.initSD()) {
-    //Serial.println(F("SD Card supported"));
-    #ifdef HAS_SCREEN
-      display_obj.tft.println(F(text_table0[3]));
-    #endif
-  }
-  else {
-    Serial.println(F("SD Card NOT Supported"));
-    #ifdef HAS_SCREEN
-      display_obj.tft.setTextColor(TFT_RED, TFT_BLACK);
-      display_obj.tft.println(F(text_table0[4]));
-      display_obj.tft.setTextColor(TFT_CYAN, TFT_BLACK);
-    #endif
-  }
 
   battery_obj.RunSetup();
 
@@ -300,11 +284,14 @@ void loop()
       display_obj.main(wifi_scan_obj.currentScanMode);
     #endif
     wifi_scan_obj.main(currentTime);
-    sd_obj.main();
-    #ifndef MARAUDER_FLIPPER
+
+    #ifdef MARAUDER_FLIPPER
+      buffer_obj.forceSaveSerial();
+    #else
       battery_obj.main(currentTime);
       temp_obj.main(currentTime);
     #endif
+
     settings_obj.main(currentTime);
     if (((wifi_scan_obj.currentScanMode != WIFI_PACKET_MONITOR) && (wifi_scan_obj.currentScanMode != WIFI_SCAN_EAPOL)) ||
         (mini)) {
