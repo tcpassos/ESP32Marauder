@@ -129,10 +129,7 @@ void setup()
   delay(10);
 
   Serial.begin(115200);
-  
-  //Serial.begin(115200);
-
-  //Serial.println("\n\nHello, World!\n");
+  Serial1.begin(115200);
 
   Serial.println("ESP-IDF version is: " + String(esp_get_idf_version()));
 

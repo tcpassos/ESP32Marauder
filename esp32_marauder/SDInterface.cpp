@@ -73,7 +73,7 @@ void SDInterface::addPacket(uint8_t* buf, uint32_t len) {
   if (!this->do_save)
     return;
 
-  #ifdef SNIFF_SERIAL
+  #ifdef MARAUDER_FLIPPER
     buffer_obj.addPacket(buf, len);
     return;
   #endif
@@ -84,7 +84,7 @@ void SDInterface::addPacket(uint8_t* buf, uint32_t len) {
 }
 
 void SDInterface::openCapture(String file_name) {
-  #ifdef SNIFF_SERIAL
+  #ifdef MARAUDER_FLIPPER
     buffer_obj.openPcap();
     return;
   #endif
@@ -229,7 +229,7 @@ bool SDInterface::checkDetectPin() {
 }
 
 void SDInterface::main() {
-  #ifdef SNIFF_SERIAL
+  #ifdef MARAUDER_FLIPPER
     buffer_obj.forceSaveSerial();
     return;
   #endif

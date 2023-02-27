@@ -2084,14 +2084,12 @@ void WiFiScan::rawSnifferCallback(void* buf, wifi_promiscuous_pkt_type_t type)
   char addr[] = "00:00:00:00:00:00";
   getMAC(addr, snifferPacket->payload, 10);
 
-  #ifndef SNIFF_SERIAL
-    Serial.print("RSSI: ");
-    Serial.print(snifferPacket->rx_ctrl.rssi);
-    Serial.print(" Ch: ");
-    Serial.print(snifferPacket->rx_ctrl.channel);
-    Serial.print(" BSSID: ");
-    Serial.print(addr);
-  #endif
+  Serial.print("RSSI: ");
+  Serial.print(snifferPacket->rx_ctrl.rssi);
+  Serial.print(" Ch: ");
+  Serial.print(snifferPacket->rx_ctrl.channel);
+  Serial.print(" BSSID: ");
+  Serial.print(addr);
   
   display_string.concat(text_table4[0]);
   display_string.concat(snifferPacket->rx_ctrl.rssi);
@@ -2106,9 +2104,7 @@ void WiFiScan::rawSnifferCallback(void* buf, wifi_promiscuous_pkt_type_t type)
       display_string.concat(" ");
     }
 
-    #ifndef SNIFF_SERIAL
-      Serial.print(" ");
-    #endif
+    Serial.print(" ");
 
     if (display_obj.display_buffer->size() == 0)
     {
@@ -2118,9 +2114,7 @@ void WiFiScan::rawSnifferCallback(void* buf, wifi_promiscuous_pkt_type_t type)
     }
   #endif
   
-  #ifndef SNIFF_SERIAL
-    Serial.println();
-  #endif
+  Serial.println();
 
   if (save_packet)
     sd_obj.addPacket(snifferPacket->payload, len);

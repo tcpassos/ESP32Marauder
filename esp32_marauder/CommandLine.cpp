@@ -31,9 +31,7 @@ void CommandLine::main(uint32_t currentTime) {
   this->runCommand(input);
 
   if (input != "") {
-    #ifndef SNIFF_SERIAL
-      Serial.print("> ");
-    #endif
+    Serial.print("> ");
   }
 }
 
@@ -98,12 +96,7 @@ bool CommandLine::hasSSIDs() {
 
 void CommandLine::runCommand(String input) {
   if (input != "") {
-    #ifdef SNIFF_SERIAL
-      if (!input.startsWith("sniff"))
-        Serial.println("#" + input);
-    #else
-      Serial.println("#" + input);
-    #endif
+    Serial.println("#" + input);
   } else {
     return;
   }
@@ -275,9 +268,7 @@ void CommandLine::runCommand(String input) {
     }
     // Raw sniff
     else if (cmd_args.get(0) == SNIFF_RAW_CMD) {
-      #ifndef SNIFF_SERIAL
-        Serial.println("Starting Raw sniff. Stop with " + (String)STOPSCAN_CMD);
-      #endif
+      Serial.println("Starting Raw sniff. Stop with " + (String)STOPSCAN_CMD);
       #ifdef HAS_SCREEN
         display_obj.clearScreen();
         menu_function_obj.drawStatusBar();
@@ -295,9 +286,7 @@ void CommandLine::runCommand(String input) {
     }
     // Beacon sniff
     else if (cmd_args.get(0) == SNIFF_BEACON_CMD) {
-      #ifndef SNIFF_SERIAL
-        Serial.println("Starting Beacon sniff. Stop with " + (String)STOPSCAN_CMD);
-      #endif
+      Serial.println("Starting Beacon sniff. Stop with " + (String)STOPSCAN_CMD);
       #ifdef HAS_SCREEN
         display_obj.clearScreen();
         menu_function_obj.drawStatusBar();
@@ -306,9 +295,7 @@ void CommandLine::runCommand(String input) {
     }
     // Probe sniff
     else if (cmd_args.get(0) == SNIFF_PROBE_CMD) {
-      #ifndef SNIFF_SERIAL
-        Serial.println("Starting Probe sniff. Stop with " + (String)STOPSCAN_CMD);
-      #endif
+      Serial.println("Starting Probe sniff. Stop with " + (String)STOPSCAN_CMD);
       #ifdef HAS_SCREEN
         display_obj.clearScreen();
         menu_function_obj.drawStatusBar();
@@ -317,9 +304,7 @@ void CommandLine::runCommand(String input) {
     }
     // Deauth sniff
     else if (cmd_args.get(0) == SNIFF_DEAUTH_CMD) {
-      #ifndef SNIFF_SERIAL
-        Serial.println("Starting Deauth sniff. Stop with " + (String)STOPSCAN_CMD);
-      #endif
+      Serial.println("Starting Deauth sniff. Stop with " + (String)STOPSCAN_CMD);
       #ifdef HAS_SCREEN
         display_obj.clearScreen();
         menu_function_obj.drawStatusBar();
@@ -328,9 +313,7 @@ void CommandLine::runCommand(String input) {
     }
     // Pwn sniff
     else if (cmd_args.get(0) == SNIFF_PWN_CMD) {
-      #ifndef SNIFF_SERIAL
-        Serial.println("Starting Pwnagotchi sniff. Stop with " + (String)STOPSCAN_CMD);
-      #endif
+      Serial.println("Starting Pwnagotchi sniff. Stop with " + (String)STOPSCAN_CMD);
       #ifdef HAS_SCREEN
         display_obj.clearScreen();
         menu_function_obj.drawStatusBar();
@@ -339,9 +322,7 @@ void CommandLine::runCommand(String input) {
     }
     // Espressif sniff
     else if (cmd_args.get(0) == SNIFF_ESP_CMD) {
-      #ifndef SNIFF_SERIAL
-        Serial.println("Starting Espressif device sniff. Stop with " + (String)STOPSCAN_CMD);
-      #endif
+      Serial.println("Starting Espressif device sniff. Stop with " + (String)STOPSCAN_CMD);
       #ifdef HAS_SCREEN
         display_obj.clearScreen();
         menu_function_obj.drawStatusBar();
@@ -356,22 +337,15 @@ void CommandLine::runCommand(String input) {
       if (ch_sw != -1) {
         wifi_scan_obj.set_channel = cmd_args.get(ch_sw + 1).toInt();
         wifi_scan_obj.changeChannel();
-        #ifndef SNIFF_SERIAL
-          Serial.println("Set channel: " + (String)wifi_scan_obj.set_channel);
-        #endif
-        
+        Serial.println("Set channel: " + (String)wifi_scan_obj.set_channel);        
       }
 
       if (d_sw == -1) {
-        #ifndef SNIFF_SERIAL
-          Serial.println("Starting PMKID sniff on channel " + (String)wifi_scan_obj.set_channel + ". Stop with " + (String)STOPSCAN_CMD);
-        #endif
+        Serial.println("Starting PMKID sniff on channel " + (String)wifi_scan_obj.set_channel + ". Stop with " + (String)STOPSCAN_CMD);
         wifi_scan_obj.StartScan(WIFI_SCAN_EAPOL, TFT_VIOLET);
       }
       else {
-        #ifndef SNIFF_SERIAL
-          Serial.println("Starting PMKID sniff with deauthentication on channel " + (String)wifi_scan_obj.set_channel + ". Stop with " + (String)STOPSCAN_CMD);
-        #endif
+        Serial.println("Starting PMKID sniff with deauthentication on channel " + (String)wifi_scan_obj.set_channel + ". Stop with " + (String)STOPSCAN_CMD);
         wifi_scan_obj.StartScan(WIFI_SCAN_ACTIVE_EAPOL, TFT_VIOLET);
       }
     }
